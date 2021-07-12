@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, Link } from "react-router-dom";
+import clsx from 'clsx';
 import { useAuth } from '../contexts/AuthContext';
 import HomeContent from '../components/HomeScreen';
 import NoData from '../components/Errors/NoData';
-import Settings from '../components/settings';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import SettingsPage from '../components/settings';
 import { 
     Box, 
-    Typography, 
     AppBar, 
     ListItem, 
     ListItemText, 
@@ -14,36 +15,52 @@ import {
     IconButton, 
     makeStyles, 
     Drawer, 
-    List,
     createStyles,
     Menu,
     MenuItem,
     Avatar,
+    Toolbar,
+    useTheme,
+    Theme,
+    ListItemIcon,
+    Typography
 } from '@material-ui/core';
 import Skeleton from 'react-loading-skeleton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { 
+    HomeTwoTone,
+    CloudUpload, 
+    PersonAdd,
+    Settings 
+} from '@material-ui/icons';
+import Upload from '../components/Upload';
+import AddFriends from '../components/Friends';
 
-const useStyles = makeStyles ((theme: any) => 
+
+
+const drawerWidth = 177;
+
+const useStyles = makeStyles ((theme: Theme) => 
     createStyles({
-    menuButton: {
-        marginLeft: '.2rem',
-        marginTop: '-.4rem',
-        justifyContent: 'flex-start',
-    },
     appBarBox: {
         display: 'inline-flex',
     },
     appBar: {
-        height: '3rem',
-        marginBottom: '3rem',
-        display: 'inline-flex'
+        height: '4rem',
+        zIndex: theme.zIndex.drawer + 1,
+        transition: theme.transitions.create(['width', 'margin'], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
     },
     drawer: {
+        width: drawerWidth,
         flexShrink: 0,
-    },
-    drawerPaper: {
+        whiteSpace: 'nowrap',
         backgroundColor: 'rgb(226, 226, 226)',
+        
     },
     drawerItems: {
         textDecoration: 'none',
@@ -68,26 +85,69 @@ const useStyles = makeStyles ((theme: any) =>
         color: 'black',
         textDecoration: 'none' 
     },
-    divider: {
-        marginBottom: '-7px'
-    },
     loadingCards: {
         marginLeft: '1rem', 
         marginRight: '1rem', 
         marginTop: '1rem'
+    }, 
+    appBarShift: {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    drawerClose: {
+        transition: theme.transitions.create('width', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        overflowX: 'hidden',
+        width: theme.spacing(7) + 1,
+        [theme.breakpoints.up('sm')]: {
+          width: theme.spacing(9) + 1,
+        },
+    },
+    drawerOpen: {
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    hide: {
+        display: 'none',
+    },
+    toolbar: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: theme.spacing(0, 1),
+        ...theme.mixins.toolbar,
+    },
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+    },
+    closeButton: {
+        height: '3rem'
+    },
+    border: {
+        border: '2px solid black'
     }
 })
 )
 
 const Home = () => {
     const { profile, logout } = useAuth();
+    const theme = useTheme();
     const classes = useStyles();
     const history = useHistory();
-    const [drawerOpen, setDrawerOpen] = useState(false);
     const [content, setContent] = useState<any>();
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+    const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
         if(profile) {
@@ -97,7 +157,15 @@ const Home = () => {
                     setLoading(false)
                     break; 
                 case '/settings':
-                    setContent(<Settings/>)
+                    setContent(<SettingsPage />)
+                    setLoading(false)
+                    break;
+                case '/upload':
+                    setContent(<Upload />)
+                    setLoading(false)
+                    break;
+                case '/addfriends':
+                    setContent(<AddFriends />)
                     setLoading(false)
                     break;
                 case '/error1':
@@ -114,25 +182,41 @@ const Home = () => {
     const drawerItems = [
         {
             name: 'Home',
-            to: '/home'
+            to: '/home',
+            icon: <HomeTwoTone />
         },
         {
-            name: 'Favorites',
-            to: '/favorites'
+            name: 'Upload',
+            to: '/upload',
+            icon: <CloudUpload />
+
+        },
+                {
+            name: 'Add Friends',
+            to: '/addfriends',
+            icon: <PersonAdd />
+        },
+        {
+            name: 'Settings',
+            to: '/settings',
+            icon: <Settings />
         },
     ];
 
     const renderDrawerList = () => {
         return drawerItems.map(item => {
             return (
-                <div onClick={() => setDrawerOpen(false)} key={item.name}>
+                <Box>
                     <Link to={item.to} className={classes.drawerItems}>
                         <ListItem button>
+                            <ListItemIcon>
+                                {item.icon}
+                            </ListItemIcon>
                             <ListItemText primary={item.name} />
                         </ListItem>
                         <Divider />
                     </Link>
-                </div>
+                </Box>
             );
         });
     };
@@ -147,6 +231,14 @@ const Home = () => {
             console.log(error)
         }
     };
+
+    const handleDrawerOpen = () => {
+        setOpen(true);
+      };
+    
+      const handleDrawerClose = () => {
+        setOpen(false);
+      };    
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -167,38 +259,53 @@ const Home = () => {
         </Box>
     :
         <Box>
-            <AppBar className={classes.appBar} color='primary'>
-                <Box className={classes.appBarBox}>
+            <CssBaseline />
+            <AppBar 
+                position="fixed" 
+                className={clsx (classes.appBar, {
+                    [classes.appBarShift]: open,
+                })} 
+                color='primary'
+            >
+                <Toolbar>
                     <IconButton 
                         edge="start" 
-                        className={classes.menuButton} 
+                        className={clsx({
+                            [classes.hide]: open,
+                        })}
                         color="secondary" 
                         aria-label="menu"
-                        onClick={() => setDrawerOpen(true)}
+                        onClick={handleDrawerOpen}
                     >
                         <MenuIcon />
                     </IconButton>
                     <Box width='100%' display='flex' justifyContent='center'>
-                        <Typography className={classes.titleText} variant='h4'>ravenous</Typography>
+                        <Typography className={classes.titleText} variant='h4'>YourSpace</Typography>
                     </Box>
+                </Toolbar>
+            </AppBar>
                         <Drawer
+                            onMouseEnter={handleDrawerOpen}
+                            onMouseLeave={handleDrawerClose}
+                            variant='permanent'
+                            className={clsx(classes.drawer, {
+                                [classes.drawerOpen]: open,
+                                [classes.drawerClose]: !open,
+                            })}
                             classes={{
-                                paper: classes.drawerPaper
+                                paper: clsx({
+                                    [classes.drawerOpen]: open,
+                                    [classes.drawerClose]: !open,
+                                }),
                             }}
-                            className={classes.drawer}
-                            variant="persistent"
-                            anchor="left"
-                            open={drawerOpen}
                         >
-                            <Box className={classes.drawerHeader}>
-                                <IconButton onClick={() => setDrawerOpen(!drawerOpen)} >
-                                    <ChevronLeftIcon />
+                            <Box className={classes.toolbar}>
+                                <IconButton className={classes.closeButton} onClick={handleDrawerClose} >
+                                    {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                                 </IconButton>
                             </Box>
-                            <Divider className={classes.divider} />
-                            <List>
-                                {renderDrawerList()}
-                            </List>
+                            <Divider />
+                            {renderDrawerList()}
                         </Drawer>
                         <IconButton className={classes.avatarButton} onClick={handleClick}>
                             <Avatar color='secondary'/>
@@ -218,8 +325,6 @@ const Home = () => {
                         </MenuItem>
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
-                </Box>
-            </AppBar>
             <Box>
                 <main>{content}</main>
             </Box>

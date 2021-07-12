@@ -11,12 +11,14 @@ const Routes = () => {
     <Switch>
       <Route exact path='/' component={Login} />
       <Route exact path='/login' component={Login} />
-      <Route path='/register' component={Register} />
+      <Route exact path='/register' component={Register} />
       <Route exact path='/forgot' component={Forgot} />
       <PrivateRoute exact path='/home' component={Home}/>
       <PrivateRoute exact path='/favorites' component={Home} />
       <PrivateRoute exact path='/settings' component={Home} />
       <PrivateRoute exact path='/error1' component={Home} />
+      <PrivateRoute exact path='/upload' component={Home} />
+      <PrivateRoute exact path='/addfriends' component={Home} />
     </Switch>
   );
 }

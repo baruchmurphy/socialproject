@@ -34,7 +34,7 @@ const NoData = () => {
         <Box className={classes.cardContainer}>
             <Card elevation={5} className={classes.card}>
                 <Typography variant='h6'>
-                    Error 1: Unable to retrieve restaurant data
+                    Error 1: Unable to retrieve your data
                 </Typography>
                 <Typography variant='h6'>
                     Try to <Link className={classes.link} to='/home'>re-load</Link> data or Return to <Link className={classes.link} onClick={handleLogout} to='/'>Login Page</Link>

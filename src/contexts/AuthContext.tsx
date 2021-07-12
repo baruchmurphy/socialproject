@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useState, useEffect } from 'react';
 import { auth } from '../services/firebase';
-import { firestore } from '../services/firebase';
+import { firestore, storage } from '../services/firebase';
 import { useHistory } from "react-router-dom";
 // import { NewUser, Favorite, Business } from '../components/types';
 
@@ -109,6 +109,7 @@ export function AuthProvider({ children }: any) {
     //     setFavorites(newFavorites.favorites);
     // }
 
+
     const logout = () => {
        return auth.signOut()
     };
@@ -135,9 +136,6 @@ export function AuthProvider({ children }: any) {
                     if(!profile) {
                         await getProfile(user.uid);
                     } 
-                    // else if(!favorites) {
-                    //     setFavorites(profile.favorites);
-                    // }
                     setCurrentUser(user)
                     setAuthLoading(false)
                 } 
