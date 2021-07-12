@@ -10,3 +10,7 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 ![image](https://user-images.githubusercontent.com/61161816/125343716-3f3c6480-e30b-11eb-8f51-8dc5181b4f58.png)
+
+![image](https://user-images.githubusercontent.com/61161816/125345413-5d0ac900-e30d-11eb-8986-5696181a54cc.png)
+
+![image](https://user-images.githubusercontent.com/61161816/125345434-64ca6d80-e30d-11eb-9301-012f0c996968.png)
