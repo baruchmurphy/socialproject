@@ -1,0 +1,73 @@
+.imageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-image: url('../../../images/LoginImage.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 25rem;
+  border: 2px solid black;
+}
+
+.topBar {
+  height: 3rem;
+  width: 100%;
+  background-color: #CCA353;
+} W
+
+.topBarText {
+  color: white;
+}
+
+.imageContents {
+  border: 2px solid black;
+  position: relative;
+}
+
+.image {
+  width: 100%;
+  height: 25rem;
+}
+
+.inputs {
+  background-color: white;
+  border-radius: 5px;
+}
+
+.SearchBar-sort-options ul{
+  display: inline-flex;
+  justify-content: center;
+  margin-bottom: 2.22rem;
+  color: #ffffff;
+}
+
+.SearchBar-sort-options li{
+  width: 4rem;
+  list-style-type: none;
+  cursor: pointer;
+  border-bottom: 1px solid #fff;
+  padding: 0 2.58rem .33rem 2.58rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.SearchBar-sort-options li:hover {
+  color: #CCA353;
+  border-bottom: 1px solid #CCA353
+}
+
+.SearchBar-sort-options li.active,
+.SearchBar-sort-options li.active:hover {
+  border-bottom: 1px solid #CCA353;
+  color: #CCA353;
+}
+.button {
+  color: white;
+}
+
+body, html {
+  height: 100%;
+
+}

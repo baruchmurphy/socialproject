@@ -6,10 +6,10 @@ import { BrowserRouter as Router } from "react-router-dom";
 function App() {
   return (
     <Router>
-    <AuthProvider >
-      <Routes />
-    </AuthProvider>
-  </Router>
+      <AuthProvider >
+        <Routes />
+      </AuthProvider>
+    </Router>
   );
 }
 

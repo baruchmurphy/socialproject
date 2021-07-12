@@ -6,6 +6,8 @@ import { useAuth } from '../../../contexts/AuthContext';
 import { useHistory } from "react-router-dom";
 import FormikAlert from '../../../formik/FormikAlert';
 import FormikInput from '../../../formik/FormikInput';
+import loginImage2 from '../../../images/loginImage2.jpg'
+
 
 const useStyles = makeStyles({
     inputs: {
@@ -21,6 +23,35 @@ const useStyles = makeStyles({
     card: {
         width: '25rem',
         height: '21rem',
+    },
+    imageContainer: {
+        backgroundImage: `url('../../../images/LoginImage.jpg')`,
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundRepeat: 'no-repeat',
+        height:'57rem'
+    },
+    image: {
+        height:'61rem',
+        width: '40rem',
+        position: 'fixed'
+    },
+    imageText: {
+        zIndex: 3,
+        width:'40rem',
+        height: '20rem',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom:'30rem'
+    },
+    imageText2:{
+        zIndex: 3,
+        width:'40rem',
+        height: '10rem',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 
@@ -59,15 +90,8 @@ const Login = () => {
     );
 
     return( 
-        <>
-        <AppBar color='primary' position="static" className={classes.appbar}>
-            <Box display="flex" marginTop='4px'>
-                <Box display="flex" justifyContent="center" width="100%" >
-                    <Typography color='secondary' variant="h4">YourSpace</Typography>
-                </Box>
-            </Box>
-        </AppBar>
-            <Box height="40rem" display="flex" justifyContent="center" alignItems="center" >
+        <Box height='100%'>
+            <Box height="100%" display="flex" alignItems="center" >
                 <Box maxWidth={300}>
                     <Formik 
                         validateOnBlur={false} 
@@ -76,52 +100,61 @@ const Login = () => {
                         onSubmit={handleSubmit}
                         validationSchema={validationSchema}
                     >
-                        <Card color='black' className={classes.card}>
-                            <Box marginTop='1rem' width='100%' display='flex' justifyContent='center'>
-                                <Typography variant="h4" gutterBottom>Login</Typography>
+                        <Box display='flex' height='50rem' width='30rem'>
+                            <Box className={classes.imageContainer}>
+                                <Typography variant='h4' className={classes.imageText}>Meet new people</Typography>
+                                <Typography variant='h4' className={classes.imageText2}>Share your interests</Typography>
+                                <img alt='loginpage illustration' src={loginImage2} className={classes.image} />
                             </Box>
-                            <Box display='flex' justifyContent='center'>
-                                <Box width='20rem' height='10rem'>
-                                    <Form>
-                                        <FormikAlert name="loginSucess" severity="success" />
-                                        <FormikAlert name="loginError" severity="error" />
-                                        <FormikInput
-                                            name="email"
-                                            type="email"
-                                            placeholder="Type email here..." 
-                                            variant="outlined"
-                                            className={classes.inputs}
-                                        />
-                                        <FormikInput 
-                                            name="password"
-                                            type="password"
-                                            placeholder="Type password here..." 
-                                            variant='outlined'
-                                            className={classes.inputs}
-                                        />
-                                        <Box display='flex' justifyContent='center'>
-                                            <Box marginBottom='1rem'>
-                                                <Box marginBottom='2px'>
-                                                    <Link color='textPrimary' href="/forgot">Forgot Password?</Link>
+                            <Box width='100%' marginLeft='5rem' display='flex' alignItems='center'>
+                                <Card elevation={5} className={classes.card}>
+                                    <Box marginTop='1rem' width='100%' display='flex' justifyContent='center'>
+                                        <Typography variant="h4" gutterBottom>Login</Typography>
+                                    </Box>
+                                    <Box display='flex' justifyContent='center'>
+                                        <Box width='20rem' height='10rem'>
+                                            <Form>
+                                                <FormikAlert name="loginSucess" severity="success" />
+                                                <FormikAlert name="loginError" severity="error" />
+                                                <FormikInput
+                                                    name="email"
+                                                    type="email"
+                                                    placeholder="Type email here..." 
+                                                    variant="outlined"
+                                                    className={classes.inputs}
+                                                />
+                                                <FormikInput 
+                                                    name="password"
+                                                    type="password"
+                                                    placeholder="Type password here..." 
+                                                    variant='outlined'
+                                                    className={classes.inputs}
+                                                />
+                                                <Box display='flex' justifyContent='center'>
+                                                    <Box marginBottom='1rem'>
+                                                        <Box marginBottom='2px'>
+                                                            <Link color='textPrimary' href="/forgot">Forgot Password?</Link>
+                                                        </Box>
+                                                        <Box>
+                                                            <Link color='textPrimary' href='/register'>Need an account? Sign Up</Link>
+                                                        </Box>
+                                                    </Box>
                                                 </Box>
-                                                <Box>
-                                                    <Link color='textPrimary' href='/register'>Need an account? Sign Up</Link>
-                                                </Box>
-                                            </Box>
+                                                <Box display='flex' justifyContent='center'>
+                                                    <Button type="submit" variant='contained' color="primary">
+                                                        <Typography className={classes.submit}>Submit</Typography>
+                                                    </Button>
+                                                </Box>      
+                                            </Form>
                                         </Box>
-                                        <Box display='flex' justifyContent='center'>
-                                            <Button type="submit" variant='contained' color="primary">
-                                                <Typography className={classes.submit}>Submit</Typography>
-                                            </Button>
-                                        </Box>      
-                                    </Form>
-                                </Box>
+                                    </Box>
+                                </Card>
                             </Box>
-                        </Card>
+                        </Box>
                     </Formik>
                 </Box>
             </Box>
-        </>
+        </Box>
     );
 };
 
