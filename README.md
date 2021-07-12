@@ -1,4 +1,4 @@
-in progress project that would include the ability to upload posts including imges and descriptions to a public forum as well as interact with other users adding friends and creating a personal feed where you would see your friend's posts as well as a search feature to search posts by tags as well as topics. it uses firestore and google authentication as well as plans to use firebase storage for image databasing
+In progress project that would include the ability to upload posts including imges and descriptions to a public forum as well as interact with other users adding friends and creating a personal feed where you would see your friend's posts as well as a search feature to search posts by tags as well as topics. it uses firestore and google authentication as well as plans to use firebase storage for image databasing
 
 
 ### `npm start`
