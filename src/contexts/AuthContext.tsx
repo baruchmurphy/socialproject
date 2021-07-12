@@ -84,32 +84,6 @@ export function AuthProvider({ children }: any) {
         }
     };
 
-    // const updateFavorites = (restaurant: {
-    //     image_url:string, 
-    //     name:string,
-    //     location: {
-    //         city:string, 
-    //         state:string, 
-    //         zip_code:string,
-    //     }, 
-    //     categories:[{
-    //         title:string
-    //     }],
-    //     rating:number, 
-    //     review_count:number
-    // }) => {   
-    //     const newFavorites = {favorites: [...profile.favorites, restaurant]}
-    //     firestore.collection('Users').doc(currentUser.uid).update(newFavorites)
-    //     setFavorites(newFavorites.favorites);
-    // }
-
-    // const deleteFavorite = (favorite: string) => {
-    //     const newFavorites = profile.favorites.filter((item: any) => item.name !== favorite);
-    //     firestore.collection('Users').doc(currentUser.uid).update({favorites: newFavorites});
-    //     setFavorites(newFavorites.favorites);
-    // }
-
-
     const logout = () => {
        return auth.signOut()
     };
@@ -153,16 +127,12 @@ export function AuthProvider({ children }: any) {
         currentUser,
         profile,
         authLoading,
-        // businesses,
-        // favorites,
         login,
         signup,
         logout, 
         resetPassword,
         updateEmailAndPassword,
         updateFirestoreEmailAndPassword,
-        // updateFavorites,
-        // deleteFavorite
     };
 
     return( 
